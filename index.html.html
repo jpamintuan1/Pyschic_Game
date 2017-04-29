@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>The Pyschic Game</title>
+  </head>
+  <body>
+
+    <!-- When we start playing the game, our HTML will be placed into this div. -->
+    <div id="game">
+      <p>Press r, p, s, a, q, z, w, x </p>
+    </div>
+
+    <div>
+      <span>
+      <span id="moves">The Pyschic Games</span>
+    </div>
+
+    <script type="text/javascript">
+
+      // Our array of possible computer choices.
+      var computerChoices = ["a", "b", "c", "d", "e","f","g","h","i","j","k","l","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+
+      // Variables for tracking our wins, losses and ties. They begin at 0.
+      var wins = 0;
+      var losses = 0;
+      var guessesLeft = 9;
+      var guessedLetters = [];
+
+      // When the user presses a key, it will run the following function...
+      document.onkeyup = function(event) {
+
+  
+
+
+
+        // Determine which key was pressed
+        var userGuess = event.key;
+
+        // Sets the computerGuess variable equal to a random choice from the computerChoice array.
+        var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+        // If the user presses "r" or "p" or "s", run the game logic.
+        if ((userGuess === "a") || (userGuess === "b") || (userGuess === "c") || (userGuess === "d") || (userGuess === "e") ||
+          (userGuess === "f") || (userGuess === "g") || (userGuess === "h") || (userGuess === "i") || (userGuess === "j") ||
+          (userGuess === "k") || (userGuess === "l") || (userGuess === "m") || (userGuess === "n") || (userGuess === "o") ||
+          (userGuess === "p") || (userGuess === "q") || (userGuess === "r") || (userGuess === "s") || (userGuess === "t") ||
+          (userGuess === "u") || (userGuess === "v") || (userGuess === "w") || (userGuess === "x") || (userGuess === "y") ||
+          (userGuess === "z")) {
+          
+
+
+
+          function reset() {
+        guessesLeft = 9;
+        
+          }
+
+
+
+
+          // add the user's guess to the guessedLetters array
+
+          // This logic determines the outcome of the game (win/loss/tie), and increments the appropriate counter.
+          if (guessesLeft > 0) {
+            losses++; guessesLeft--; guessedLetters.push(userGuess);
+        
+          }
+          else if (userGuess === computerGuess) {
+            wins++; reset(guessesLeft);
+          }
+          else if (guessesLeft==="0") {
+            reset(guessesLeft); losses++;
+            
+          }
+          else if(guessesLeft == 0){
+            // Then we will loss and we'll update the html to display the loss 
+            losses++;reset(guessesLeft);
+          
+          }
+          // Here we create the HTML that will be injected into our div and displayed on the page.
+          var html = "<p>Press r, p, s, a, z, w, x ,q </p>" +
+          "<p>wins: " + wins + "</p>" +
+          "<p>losses: " + losses + "</p>" +
+          "<p>guessesLeft: " + guessesLeft + "</p>" +
+          "<p>guessedLetters: "  + guessedLetters +  "</p>";
+
+          // Injecting the HTML we just created into our div and updating the game information on our page.
+          document.querySelector("#game").innerHTML = html;
+
+          document.getElementById("moves").innerHTML = "Computer's <strong>" + computerGuess + 
+            "</strong> vs. user's <strong>" + userGuess + "</strong>.";
+
+              var updateguessedLetters = function() {
+  // Here we take the guesses the user has tried -- then display it as letters separated by commas. 
+      document.querySelector('#let').innerHTML = "Guessed Letters: " + guessedLetters.join(', ');
+        };     
+
+        }
+      };
+
+    </script>
+
+  </body>
+</html>
